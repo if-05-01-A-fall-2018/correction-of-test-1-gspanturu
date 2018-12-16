@@ -1,0 +1,82 @@
+#Panturu
+"Enter first nr:Enter second nr:Result:"
+
+inc 12
+
+lit 0 #print "first nr"
+lit 15
+lit 16
+out 2
+
+la 0 32 #load first nr
+la 0 36
+in 0
+
+lit 15 #print "second nr"
+lit 16
+lit 17
+out 2
+
+la 0 36 #load second nr
+la 0 40
+in 0
+
+lv 0 32
+lit 6
+rel 5  #nr at 32 > 6        #changed rel 1 to rel 5
+#tjmp .compareFirstWithOne  #removed from old solution
+tjmp .end                   #changed from "jmp" to "tjmp"
+
+lv 0 36
+lit 6
+rel 5                       #changed rel 1 to rel 5
+#tjmp .compareSecondWithOne #removed from old solution
+tjmp .end                   #changed from "jmp" to "tjmp"
+
+#.compareSecondWithOne      #removed from old solution
+lv 0 36
+lit 1
+rel 4 #nr at 32 >= 1
+#tjmp .rightNumber         #removed from old solution
+fjmp .end
+
+#.compareFirstWithOne     #removed from old solution
+lv 0 32
+lit 1
+rel 4 #nr at 32 >= 1
+#tjmp .rightNumber         #removed from old solution
+fjmp .end
+
+#.rightNumber             #removed from old solution because I have moved this operation down below
+#lv 0 32
+#lv 0 36
+#rel 2   # ==
+#tjmp .addAndMul
+#fjmp  .onlySum
+
+#.addAndMul                #removed from old solution
+la 0 40
+lv 0 32
+lv 0 36
+add
+sto
+
+lv 0 32
+lv 0 36
+rel 2   # ==
+fjmp .result
+
+la 0 40                    #added to old solution
+lv 0 40   #sum * 2
+lit 2
+mul
+sto                        #added to old solution
+jmp .result
+
+.result
+lv 0 40
+out 0
+out 3
+
+.end
+halt
